@@ -1,19 +1,34 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 
+import { PRODUCTS } from "../data/products";
+import ProductsItem from "../components/ProductsItem";
 import React from "react";
 
-const ProductsScreen = ({ navigation }) => {
+const ProductsScreen = ({ navigation, route }) => {
+
+  const newProducts = PRODUCTS.filter(
+    product => product.category === route.params.categoryId
+  )
+
+  const handleSelectedProducts = item => {
+    navigation.navigate("Details", {
+      name: item.name,
+    })
+  }
+
+  const renderProductsItem = ({ item }) => (
+    <ProductsItem item={item} onSelected={handleSelectedProducts} />
+  )
+
   return (
-    <View style={styles.container}>
-      <Text>ProductsScreen</Text>
-      <Button title="Go to Details" 
-      onPress={() => navigation.navigate("Details")}
-      color="#f40505"/>
-      <Button title="Go back" 
-      onPress={() => navigation.goBack()}/>
-    </View>
-  );
-};
+    <FlatList
+      data={newProducts}
+      renderItem={renderProductsItem}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+    />
+  )
+}
 
 export default ProductsScreen;
 
@@ -22,5 +37,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  productsContainer: {
+    height: 150,
+    width: 150,
   },
 });
