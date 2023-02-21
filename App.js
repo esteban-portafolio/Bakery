@@ -1,13 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import { NavigationContainer } from "@react-navigation/native";
-import ShopNavigator from './src/navigation/ShopNavigator';
-import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import store from "./src/store"
 import { useFonts } from 'expo-font';
 
 export default function App() {
-
   const [loaded] = useFonts({
     UnboundedBold: require("./src/assets/fonts/Unbounded-ExtraBold.ttf")
   })
@@ -17,9 +14,12 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <BottomTabNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <BottomTabNavigator />
+      </NavigationContainer>
+    </Provider>
+
   )
 
 
