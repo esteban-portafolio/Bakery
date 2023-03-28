@@ -7,7 +7,7 @@ import ProductsItem from "../components/ProductsItem";
 
 const ProductsScreen = ({ navigation, route }) => {
   const dispatch = useDispatch()
-  const categoryProducts = useSelector((state) => state.products.filteredProduct)
+  const categoryProducts = useSelector(state => state.products.filteredProduct)
   const category = useSelector(state => state.categories.selected)
 
   useEffect(() => {

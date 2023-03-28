@@ -1,16 +1,24 @@
 import { Button, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
-import { useSelector } from "react-redux";
+import { addItem } from "../store/actions/cart.action";
 
 const DetailsScreen = ({navigation, route}) => {
+  const dispatch = useDispatch()
   const bread = useSelector(state => state.products.selected)
+
+
+  const handleAddItem = () => {
+    dispatch(addItem(bread))
+  }
   
   return (
     <View style={styles.container}>
-      <Text>{route.params.name}</Text>
-      <Button title="Go to Categories" 
-      onPress={()=> navigation.popToTop()}/>
+      <Text>{bread.name}</Text>
+      <Text>{bread.description}</Text>
+      <Text>{bread.price}</Text>
+      <Button title="Agregar al Carrito" onPress={handleAddItem}/>
     </View>
   );
 };
